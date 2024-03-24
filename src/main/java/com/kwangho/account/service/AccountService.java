@@ -10,4 +10,6 @@ public interface AccountService {
     AccountResponseDto join(AccountRequestDto accountRequestDto);
 
     Map<String,String> login(AccountRequestDto accountRequestDto);
+
+    Map<String, String> deposit(AccountRequestDto accountRequestDto);
 }

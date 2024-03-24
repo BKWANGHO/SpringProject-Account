@@ -4,6 +4,7 @@ import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
 import com.kwangho.account.model.Account;
 import com.kwangho.account.repository.AccountRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class AccountServiceImpl implements AccountService {
+    private final EntityManager em;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     @Override
@@ -52,8 +54,27 @@ public class AccountServiceImpl implements AccountService {
             map.put("fail","비밀번호가 틀렸다.");
             return map;
         }else {
-            map.put("success","로그인 성공");
+            map.put("success","로그인 성공"+accountRequestDto.getUsername());
         return map;
         }
     }
+
+    @Override
+    public Map<String, String> deposit(AccountRequestDto accountRequestDto) {
+        Map<String,String> map = new HashMap<>();
+        Optional<Account> deposit = accountRepository.findByAccountNumber(accountRequestDto.getAccountNumber());
+
+        Account account = em.find(Account.class, deposit.get().getId());
+
+        if(deposit.isEmpty()){
+            map.put("실패","없는계좌입니다.");
+        }else {
+//            account.setBalance(deposit.get().getBalance() + accountRequestDto.getBalance());
+            account.setBalance( accountRequestDto.getBalance());
+            map.put("성공",accountRequestDto.getBalance() +"원 입금성공");
+        }
+        return map;
+    }
+
+
 }

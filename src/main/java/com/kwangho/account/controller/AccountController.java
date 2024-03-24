@@ -4,10 +4,7 @@ import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
 import com.kwangho.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -30,5 +27,9 @@ public class AccountController {
         return accountService.login(accountRequestDto);
     }
 
-
+    @PostMapping("/deposit")
+    public Map<String,String> deposit(@RequestBody AccountRequestDto accountRequestDto){
+        System.out.println(accountRequestDto.getBalance());
+        return accountService.deposit(accountRequestDto);
+    }
 }

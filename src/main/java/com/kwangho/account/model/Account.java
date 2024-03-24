@@ -3,6 +3,7 @@ package com.kwangho.account.model;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.domain.Persistable;
 
 import java.time.LocalDateTime;
@@ -54,8 +55,10 @@ public class Account implements Persistable<Long> {
 
     @Override
     public boolean isNew() {
-
-
         return false;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }

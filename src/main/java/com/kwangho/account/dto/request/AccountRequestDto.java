@@ -9,5 +9,6 @@ public class AccountRequestDto {
     private String name;
     private String password;
     private String accountNumber;
+    private int balance;
 
 }
