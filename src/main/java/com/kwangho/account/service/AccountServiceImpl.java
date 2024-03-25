@@ -44,34 +44,42 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Map<String,String> login(AccountRequestDto accountRequestDto) {
-        Optional<Account> existingAccount = accountRepository.findByUsername(accountRequestDto.getUsername());
+        Account existingAccount = accountRepository.findByUsername(accountRequestDto.getUsername()).orElse(null);
         Map<String,String> map = new HashMap<>();
-        if (existingAccount.isEmpty()) {
-            map.put("fail","없는 아이디입니다.");
-            return map;
-        }
-        if(!passwordEncoder.matches(accountRequestDto.getPassword(),existingAccount.get().getPassword())){
-            map.put("fail","비밀번호가 틀렸다.");
-            return map;
+        if (existingAccount==null) {
+            map.put("Messege","없는 아이디입니다.");
+        }else if(!passwordEncoder.matches(accountRequestDto.getPassword(),existingAccount.getPassword())){
+            map.put("Messege","비밀번호가 틀렸다.");
         }else {
-            map.put("success","로그인 성공"+accountRequestDto.getUsername());
-        return map;
+            map.put("Messege","로그인 성공"+accountRequestDto.getUsername());
         }
+        return map;
     }
 
     @Override
     public Map<String, String> deposit(AccountRequestDto accountRequestDto) {
         Map<String,String> map = new HashMap<>();
-        Optional<Account> deposit = accountRepository.findByAccountNumber(accountRequestDto.getAccountNumber());
+        Account deposit = accountRepository.findByAccountNumber(accountRequestDto.getAccountNumber()).orElse(null);
 
-        Account account = em.find(Account.class, deposit.get().getId());
-
-        if(deposit.isEmpty()){
-            map.put("실패","없는계좌입니다.");
+        if(deposit==null){
+            map.put("Messege","없는계좌입니다.");
         }else {
-//            account.setBalance(deposit.get().getBalance() + accountRequestDto.getBalance());
-            account.setBalance( accountRequestDto.getBalance());
-            map.put("성공",accountRequestDto.getBalance() +"원 입금성공");
+            deposit.setBalance( deposit.getBalance() + accountRequestDto.getBalance());
+            map.put("Messege",accountRequestDto.getBalance() +"원 입금성공");
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, String> withdraw(AccountRequestDto accountRequestDto) {
+        Map<String,String> map = new HashMap<>();
+        Account withdraw = accountRepository.findByAccountNumber(accountRequestDto.getAccountNumber()).orElse(null);
+
+        if(withdraw==null){
+            map.put("Messege","없는계좌입니다.");
+        }else {
+            withdraw.setBalance( withdraw.getBalance() - accountRequestDto.getBalance());
+            map.put("Messege",accountRequestDto.getBalance() +"원 입금성공");
         }
         return map;
     }

@@ -29,7 +29,13 @@ public class AccountController {
 
     @PostMapping("/deposit")
     public Map<String,String> deposit(@RequestBody AccountRequestDto accountRequestDto){
-        System.out.println(accountRequestDto.getBalance());
         return accountService.deposit(accountRequestDto);
     }
+
+    @PostMapping("/withdraw")
+    public Map<String,String> withdraw(@RequestBody AccountRequestDto accountRequestDto){
+        return accountService.withdraw(accountRequestDto);
+    }
+
+
 }
