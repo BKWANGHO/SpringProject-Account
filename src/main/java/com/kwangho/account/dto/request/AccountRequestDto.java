@@ -10,5 +10,5 @@ public class AccountRequestDto {
     private String password;
     private String accountNumber;
     private int balance;
-
+    private String receiverAccount;
 }

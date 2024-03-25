@@ -37,5 +37,9 @@ public class AccountController {
         return accountService.withdraw(accountRequestDto);
     }
 
+    @PostMapping("/transfer")
+    public Map<String,String> accountTransfer(@RequestBody AccountRequestDto accountRequestDto){
+        return accountService.accountTransfer(accountRequestDto);
+    }
 
 }

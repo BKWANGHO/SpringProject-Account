@@ -14,4 +14,6 @@ public interface AccountService {
     Map<String, String> deposit(AccountRequestDto accountRequestDto);
 
     Map<String, String> withdraw(AccountRequestDto accountRequestDto);
+
+    Map<String, String> accountTransfer(AccountRequestDto accountRequestDto);
 }
