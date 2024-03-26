@@ -1,6 +1,7 @@
 package com.kwangho.account.service;
 
 
+import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
 
@@ -9,11 +10,13 @@ import java.util.Map;
 public interface AccountService {
     AccountResponseDto join(AccountRequestDto accountRequestDto);
 
-    Map<String,String> login(AccountRequestDto accountRequestDto);
+    Map<String, Messege> login(AccountRequestDto accountRequestDto);
 
-    Map<String, String> deposit(AccountRequestDto accountRequestDto);
+    Map<String, Messege> deposit(AccountRequestDto accountRequestDto);
 
-    Map<String, String> withdraw(AccountRequestDto accountRequestDto);
+    Map<String, Messege> withdraw(AccountRequestDto accountRequestDto);
 
-    Map<String, String> accountTransfer(AccountRequestDto accountRequestDto);
+    Map<String, Messege> accountTransfer(AccountRequestDto accountRequestDto);
+
+    Map<String,Messege> accountDisabled(AccountRequestDto accountRequestDto);
 }

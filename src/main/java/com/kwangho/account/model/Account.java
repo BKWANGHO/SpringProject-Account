@@ -3,15 +3,17 @@ package com.kwangho.account.model;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Persistable;
 
+import javax.swing.text.StyledEditorKit;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Table(name = "banking")
-public class Account implements Persistable<Long> {
+public class Account extends BaseEntity implements Persistable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -35,30 +37,37 @@ public class Account implements Persistable<Long> {
     @Column(name = "accountNumber")
     private String accountNumber;
 
-    @Column(name = "accountdate")
-    private LocalDateTime accountdate;
+    @Column(name= "activate")
+    private Boolean activate;
 
-    @Builder
-    public Account(String username, String password, int balance, String name, String transation, String accountNumber, LocalDateTime accountdate) {
+@Builder
+    public Account(Long id, String username, String password, int balance, String name, String transation, String accountNumber,Boolean activate) {
+    super();
+    this.id = id;
         this.username = username;
         this.password = password;
         this.balance = balance;
         this.name = name;
         this.transation = transation;
         this.accountNumber = accountNumber;
-        this.accountdate = accountdate;
+        this.activate = activate;
+
     }
 
     public Account() {
+        super();
+    }
 
+    public void setActivate(Boolean activate) {
+        this.activate = activate;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     @Override
     public boolean isNew() {
         return false;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
     }
 }

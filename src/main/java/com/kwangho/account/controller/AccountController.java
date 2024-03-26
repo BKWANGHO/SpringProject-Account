@@ -1,5 +1,6 @@
 package com.kwangho.account.controller;
 
+import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
 import com.kwangho.account.service.AccountService;
@@ -23,22 +24,22 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public Map<String,String> login(@RequestBody AccountRequestDto accountRequestDto){
+    public Map<String, Messege> login(@RequestBody AccountRequestDto accountRequestDto){
         return accountService.login(accountRequestDto);
     }
 
     @PostMapping("/deposit")
-    public Map<String,String> deposit(@RequestBody AccountRequestDto accountRequestDto){
+    public Map<String,Messege> deposit(@RequestBody AccountRequestDto accountRequestDto){
         return accountService.deposit(accountRequestDto);
     }
 
     @PostMapping("/withdraw")
-    public Map<String,String> withdraw(@RequestBody AccountRequestDto accountRequestDto){
+    public Map<String,Messege> withdraw(@RequestBody AccountRequestDto accountRequestDto){
         return accountService.withdraw(accountRequestDto);
     }
 
     @PostMapping("/transfer")
-    public Map<String,String> accountTransfer(@RequestBody AccountRequestDto accountRequestDto){
+    public Map<String,Messege> accountTransfer(@RequestBody AccountRequestDto accountRequestDto){
         return accountService.accountTransfer(accountRequestDto);
     }
 
