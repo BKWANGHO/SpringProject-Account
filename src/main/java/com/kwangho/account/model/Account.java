@@ -19,7 +19,7 @@ public class Account extends BaseEntity implements Persistable<Long> {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username",unique = true)
     private String username;
 
     @Column(name = "password")
@@ -39,9 +39,11 @@ public class Account extends BaseEntity implements Persistable<Long> {
 
     @Column(name= "activate")
     private Boolean activate;
+    @Column(name="count")
+    private int count;
 
 @Builder
-    public Account(Long id, String username, String password, int balance, String name, String transation, String accountNumber,Boolean activate) {
+    public Account(Long id, String username, String password, int balance, String name, String transation, String accountNumber,Boolean activate,Integer count) {
     super();
     this.id = id;
         this.username = username;
@@ -51,6 +53,7 @@ public class Account extends BaseEntity implements Persistable<Long> {
         this.transation = transation;
         this.accountNumber = accountNumber;
         this.activate = activate;
+        this.count =count;
 
     }
 
@@ -64,6 +67,10 @@ public class Account extends BaseEntity implements Persistable<Long> {
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @Override

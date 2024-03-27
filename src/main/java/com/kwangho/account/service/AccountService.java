@@ -4,6 +4,7 @@ package com.kwangho.account.service;
 import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
+import com.kwangho.account.model.Account;
 
 import java.util.Map;
 
@@ -18,5 +19,5 @@ public interface AccountService {
 
     Map<String, Messege> accountTransfer(AccountRequestDto accountRequestDto);
 
-    Map<String,Messege> accountDisabled(AccountRequestDto accountRequestDto);
+    Map<String,Messege> accountDisabled(Account account);
 }

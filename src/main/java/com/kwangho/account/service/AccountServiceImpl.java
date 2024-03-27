@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     private final EntityManager em;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    int a=0;
+
     @Override
     public AccountResponseDto join(AccountRequestDto accountRequestDto) {
         Optional<Account> existingAccount = accountRepository.findByUsername(accountRequestDto.getUsername());
@@ -37,6 +37,7 @@ public class AccountServiceImpl implements AccountService {
                     .password(encodePassword)
                     .balance(0)
                     .activate(true)
+                    .count(0)
                     .build();
             accountRepository.save(account);
             return new AccountResponseDto(account.getName(), account.getUsername(), account.getAccountNumber(), account.getBalance());
@@ -48,13 +49,16 @@ public class AccountServiceImpl implements AccountService {
         Account existingAccount = accountRepository.findByUsername(accountRequestDto.getUsername()).orElse(null);
         Map<String, Messege> map = new HashMap<>();
         if (existingAccount == null) {
-            map.put("Messege",Messege.FAIL);
+            map.put("Messege", Messege.FAIL);
+        } else if (existingAccount.getActivate().equals(false)) {
+            map.put("Messege", Messege.ACCOUNT_LOCK);
         } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), existingAccount.getPassword())) {
             map.put("Messege", Messege.FAIL);
-            a++;
-            accountDisabled(accountRequestDto);
+            existingAccount.setCount(existingAccount.getCount() + 1);
+            accountDisabled(existingAccount);
         } else {
             map.put("Messege", Messege.SUCCESS);
+            existingAccount.setCount(0);
         }
 
         return map;
@@ -81,12 +85,16 @@ public class AccountServiceImpl implements AccountService {
 
         if (withdraw == null) {
             map.put("Messege", Messege.FAIL);
-
+        } else if (withdraw.getActivate().equals(false)) {
+            map.put("Messege", Messege.ACCOUNT_LOCK);
         } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), withdraw.getPassword())) {
             map.put("Messege", Messege.WRONG_PASSWORD);
+            withdraw.setCount(withdraw.getCount() + 1);
+            accountDisabled(withdraw);
         } else {
             withdraw.setBalance(withdraw.getBalance() - accountRequestDto.getBalance());
             map.put("Messege", Messege.SUCCESS);
+            withdraw.setCount(0);
         }
         return map;
     }
@@ -98,27 +106,32 @@ public class AccountServiceImpl implements AccountService {
         Account rc = accountRepository.findByAccountNumber(accountRequestDto.getReceiverAccount()).orElse(null);
         if (ac == null) {
             map.put("Messege", Messege.FAIL);
+        } else if (ac.getActivate().equals(false)) {
+            map.put("Messege", Messege.ACCOUNT_LOCK);
         } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), ac.getPassword())) {
             map.put("Messege", Messege.FAIL);
+            ac.setCount(ac.getCount() + 1);
+            accountDisabled(ac);
         } else if (rc == null) {
             map.put("Messege", Messege.FAIL);
+
         } else {
             ac.setBalance(ac.getBalance() - accountRequestDto.getBalance());
             rc.setBalance(rc.getBalance() + accountRequestDto.getBalance());
+            ac.setCount(0);
             map.put("Messege", Messege.SUCCESS);
         }
         return map;
     }
 
     @Override
-    public Map<String,Messege> accountDisabled(AccountRequestDto accountRequestDto) {
-        Account account = accountRepository.findByUsername(accountRequestDto.getUsername()).orElse(null);
+    public Map<String, Messege> accountDisabled(Account account) {
+        Account accountcheck = accountRepository.findByUsername(account.getUsername()).orElse(null);
         Map<String, Messege> map = new HashMap<>();
-        if (a==3){
-           account.setActivate(false);
-           map.put("Messege",Messege.ACCOUNT_LOCK);
-            System.out.println("계좌잠김");
-       }
+        if (accountcheck.getCount() == 3) {
+            accountcheck.setActivate(false);
+            map.put("Messege", Messege.ACCOUNT_LOCK);
+        }
 
         return map;
     }
