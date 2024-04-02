@@ -1,7 +1,9 @@
-package com.kwangho.account.model;
+package com.kwangho.account.history;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kwangho.account.account.Account;
+import com.kwangho.account.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class History extends BaseEntity{
+public class History extends BaseEntity {
 
     @Id
     @Column(name="id")

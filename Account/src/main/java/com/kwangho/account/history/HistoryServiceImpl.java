@@ -1,9 +1,6 @@
-package com.kwangho.account.service;
+package com.kwangho.account.history;
 
 import com.kwangho.account.dto.request.AccountRequestDto;
-import com.kwangho.account.model.History;
-import com.kwangho.account.repository.HistoryRepository;
-import com.kwangho.account.repository.mapping.HistoryMapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

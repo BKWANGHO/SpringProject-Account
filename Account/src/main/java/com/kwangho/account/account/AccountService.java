@@ -1,10 +1,10 @@
-package com.kwangho.account.service;
+package com.kwangho.account.account;
 
 
 import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
-import com.kwangho.account.model.Account;
+import com.kwangho.account.account.Account;
 
 import java.util.Map;
 

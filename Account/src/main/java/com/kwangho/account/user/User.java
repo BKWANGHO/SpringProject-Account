@@ -1,6 +1,7 @@
-package com.kwangho.account.model;
+package com.kwangho.account.user;
 
 
+import com.kwangho.account.account.Account;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

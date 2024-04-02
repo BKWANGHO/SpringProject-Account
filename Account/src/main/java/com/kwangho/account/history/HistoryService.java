@@ -1,4 +1,4 @@
-package com.kwangho.account.service;
+package com.kwangho.account.history;
 
 import com.kwangho.account.dto.request.AccountRequestDto;
 

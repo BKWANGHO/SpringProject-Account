@@ -1,14 +1,13 @@
-package com.kwangho.account.controller;
+package com.kwangho.account.account;
 
 import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
-import com.kwangho.account.service.AccountService;
+import com.kwangho.account.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Objects;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -19,7 +18,7 @@ public class AccountController {
 
 
 
-    @PostMapping("/join")
+    @PostMapping("/account/join")
     public AccountResponseDto join(@RequestBody AccountRequestDto accountRequestDto) {
         return accountService.join(accountRequestDto);
     }

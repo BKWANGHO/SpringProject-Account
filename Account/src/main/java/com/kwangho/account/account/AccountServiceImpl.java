@@ -1,13 +1,11 @@
-package com.kwangho.account.service;
+package com.kwangho.account.account;
 
 import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
-import com.kwangho.account.model.Account;
-import com.kwangho.account.model.History;
-import com.kwangho.account.repository.AccountRepository;
-import com.kwangho.account.repository.HistoryRepository;
-import jakarta.persistence.EntityManager;
+import com.kwangho.account.history.History;
+import com.kwangho.account.history.HistoryRepository;
+import com.kwangho.account.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> existingAccount = accountRepository.findByUsername(accountRequestDto.getUsername());
         String encodePassword = passwordEncoder.encode(accountRequestDto.getPassword());
         if (existingAccount.isPresent()) {
-            return new AccountResponseDto(null, "있는 아이디 다시 입력해", null, 0);
+            return new AccountResponseDto(null, null, null, 0);
         } else {
             Account account = Account.builder()
                     .username(accountRequestDto.getUsername())

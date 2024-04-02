@@ -1,8 +1,7 @@
-package com.kwangho.account.repository;
+package com.kwangho.account.history;
 
-import com.kwangho.account.model.Account;
-import com.kwangho.account.model.History;
-import com.kwangho.account.repository.mapping.HistoryMapping;
+import com.kwangho.account.account.Account;
+import com.kwangho.account.history.History;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

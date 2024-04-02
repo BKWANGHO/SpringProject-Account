@@ -1,11 +1,12 @@
 package com.kwangho.account.dto.request;
 
+import com.kwangho.account.user.User;
 import lombok.Getter;
 
 @Getter
 public class AccountRequestDto {
 
-    private String username;
+    private User username;
     private String name;
     private String password;
     private String accountNumber;
