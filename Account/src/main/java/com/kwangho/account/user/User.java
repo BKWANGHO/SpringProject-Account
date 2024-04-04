@@ -3,10 +3,7 @@ package com.kwangho.account.user;
 
 import com.kwangho.account.account.Account;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -21,9 +18,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="username",unique = true)
     private String username;
 
     private String password;
+
 
     private String name;
 
@@ -35,4 +34,7 @@ public class User {
     @Column(name = "account")
     private List<Account> account;
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

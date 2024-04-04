@@ -1,8 +1,7 @@
 package com.kwangho.account.history;
 
 
-import com.kwangho.account.dto.request.AccountRequestDto;
-import com.kwangho.account.history.HistoryService;
+import com.kwangho.account.account.AccountRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

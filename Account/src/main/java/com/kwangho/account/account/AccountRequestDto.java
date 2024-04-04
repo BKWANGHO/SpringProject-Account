@@ -1,6 +1,5 @@
-package com.kwangho.account.dto.request;
+package com.kwangho.account.account;
 
-import com.kwangho.account.user.User;
 import lombok.Getter;
 
 @Getter
@@ -9,7 +8,7 @@ public class AccountRequestDto {
     private Long userId;
     private String username;
     private String name;
-    private String password;
+    private String accountPassword;
     private String accountNumber;
     private int totalbalance;
     private String receiverAccount;

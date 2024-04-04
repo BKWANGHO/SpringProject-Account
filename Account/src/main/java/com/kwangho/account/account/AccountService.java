@@ -3,16 +3,12 @@ package com.kwangho.account.account;
 
 import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.common.ResponseMessege;
-import com.kwangho.account.dto.request.AccountRequestDto;
-import com.kwangho.account.dto.response.AccountResponseDto;
-import com.kwangho.account.account.Account;
 
 import java.util.Map;
 
 public interface AccountService {
     ResponseMessege join(AccountRequestDto accountRequestDto);
 
-    Map<String, Messege> login(AccountRequestDto accountRequestDto);
 
     Map<String, Messege> deposit(AccountRequestDto accountRequestDto);
 

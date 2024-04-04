@@ -23,14 +23,15 @@ public class Account extends BaseEntity implements Persistable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String password;
+    @Column(name = "account_password")
+    private String accountPassword;
+
+    private String username;
+
 
     private int totalBalance;
 
-    private String username;
-    private String name;
-
-    @Column(name = "accountNumber",unique = true)
+    @Column(name = "account_number",unique = true)
     private String accountNumber;
 
     private String bank;

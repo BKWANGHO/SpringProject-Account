@@ -1,4 +1,4 @@
-package com.kwangho.account.dto.request;
+package com.kwangho.account.user;
 
 import lombok.Getter;
 

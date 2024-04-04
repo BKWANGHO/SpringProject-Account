@@ -2,9 +2,6 @@ package com.kwangho.account.account;
 
 import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.common.ResponseMessege;
-import com.kwangho.account.dto.request.AccountRequestDto;
-import com.kwangho.account.dto.response.AccountResponseDto;
-import com.kwangho.account.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +21,6 @@ public class AccountController {
         return accountService.join(accountRequestDto);
     }
 
-    @PostMapping("/login")
-    public Map<String, Messege> login(@RequestBody AccountRequestDto accountRequestDto){
-        return accountService.login(accountRequestDto);
-    }
 
     @PostMapping("/deposit")
     public Map<String,Messege> deposit(@RequestBody AccountRequestDto accountRequestDto){
@@ -44,7 +37,7 @@ public class AccountController {
         return accountService.accountTransfer(accountRequestDto);
     }
 
-    @PostMapping("/list")
+    @PostMapping("/account/list")
     public Map<String, Object> accountList(@RequestBody AccountRequestDto accountRequestDto){
         return accountService.accountList(accountRequestDto);
     }

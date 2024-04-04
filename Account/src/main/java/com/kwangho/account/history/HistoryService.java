@@ -1,6 +1,6 @@
 package com.kwangho.account.history;
 
-import com.kwangho.account.dto.request.AccountRequestDto;
+import com.kwangho.account.account.AccountRequestDto;
 
 import java.util.Map;
 

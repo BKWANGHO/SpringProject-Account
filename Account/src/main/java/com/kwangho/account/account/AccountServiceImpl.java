@@ -2,11 +2,8 @@ package com.kwangho.account.account;
 
 import com.kwangho.account.Enum.Messege;
 import com.kwangho.account.common.ResponseMessege;
-import com.kwangho.account.dto.request.AccountRequestDto;
-import com.kwangho.account.dto.response.AccountResponseDto;
 import com.kwangho.account.history.History;
 import com.kwangho.account.history.HistoryRepository;
-import com.kwangho.account.user.User;
 import com.kwangho.account.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +23,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseMessege join(AccountRequestDto accountRequestDto) {
-        String encodePassword = passwordEncoder.encode(accountRequestDto.getPassword());
-        if (userRepository.existsById(accountRequestDto.getUserId())) {
+        String encodePassword = passwordEncoder.encode(accountRequestDto.getAccountPassword());
+        if (!userRepository.existsById(accountRequestDto.getUserId())) {
             return new ResponseMessege("messege",Messege.FAIL);
         } else {
             Account account = Account.builder()
                     .user(userRepository.findById(accountRequestDto.getUserId()).get())
-                    .name(accountRequestDto.getName())
                     .bank((accountRequestDto.getBank()))
                     .accountNumber(accountRequestDto.getAccountNumber())
-                    .password(encodePassword)
+                    .accountPassword(encodePassword)
                     .totalBalance(0)
                     .activate(true)
                     .count(0)
@@ -43,26 +39,6 @@ public class AccountServiceImpl implements AccountService {
             accountRepository.save(account);
             return new ResponseMessege("messege",Messege.SUCCESS);
         }
-    }
-
-    @Override
-    public Map<String, Messege> login(AccountRequestDto accountRequestDto) {
-        Account existingAccount = accountRepository.findByUsername(accountRequestDto.getUsername()).orElse(null);
-        Map<String, Messege> map = new HashMap<>();
-        if (existingAccount == null) {
-            map.put("Messege", Messege.FAIL);
-        } else if (existingAccount.getActivate().equals(false)) {
-            map.put("Messege", Messege.ACCOUNT_LOCK);
-        } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), existingAccount.getPassword())) {
-            map.put("Messege", Messege.FAIL);
-            existingAccount.setCount(existingAccount.getCount() + 1);
-            accountDisabled(accountRequestDto);
-        } else {
-            map.put("Messege", Messege.SUCCESS);
-            existingAccount.setCount(0);
-        }
-
-        return map;
     }
 
     @Override
@@ -99,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
             map.put("Messege", Messege.FAIL);
         } else if (withdraw.getActivate().equals(false)) {
             map.put("Messege", Messege.ACCOUNT_LOCK);
-        } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), withdraw.getPassword())) {
+        } else if (!passwordEncoder.matches(accountRequestDto.getAccountPassword(), withdraw.getAccountPassword())) {
             map.put("Messege", Messege.WRONG_PASSWORD);
             withdraw.setCount(withdraw.getCount() + 1);
             accountDisabled(accountRequestDto);
@@ -129,7 +105,7 @@ public class AccountServiceImpl implements AccountService {
             map.put("Messege", Messege.FAIL);
         } else if (ac.getActivate().equals(false)) {
             map.put("Messege", Messege.ACCOUNT_LOCK);
-        } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), ac.getPassword())) {
+        } else if (!passwordEncoder.matches(accountRequestDto.getAccountPassword(), ac.getAccountPassword())) {
             map.put("Messege", Messege.FAIL);
             ac.setCount(ac.getCount() + 1);
             accountDisabled(accountRequestDto);
