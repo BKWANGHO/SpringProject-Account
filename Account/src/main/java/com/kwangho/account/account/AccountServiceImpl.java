@@ -1,11 +1,13 @@
 package com.kwangho.account.account;
 
 import com.kwangho.account.Enum.Messege;
+import com.kwangho.account.common.ResponseMessege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
 import com.kwangho.account.history.History;
 import com.kwangho.account.history.HistoryRepository;
 import com.kwangho.account.user.User;
+import com.kwangho.account.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,19 +19,19 @@ import java.util.*;
 @RequiredArgsConstructor
 @Transactional
 public class AccountServiceImpl implements AccountService {
+    private final UserRepository userRepository;
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final HistoryRepository historyRepository;
 
     @Override
-    public AccountResponseDto join(AccountRequestDto accountRequestDto) {
-        Optional<Account> existingAccount = accountRepository.findByUsername(accountRequestDto.getUsername());
+    public ResponseMessege join(AccountRequestDto accountRequestDto) {
         String encodePassword = passwordEncoder.encode(accountRequestDto.getPassword());
-        if (existingAccount.isPresent()) {
-            return new AccountResponseDto(null, null, null, 0);
+        if (userRepository.existsById(accountRequestDto.getUserId())) {
+            return new ResponseMessege("messege",Messege.FAIL);
         } else {
             Account account = Account.builder()
-                    .username(accountRequestDto.getUsername())
+                    .user(userRepository.findById(accountRequestDto.getUserId()).get())
                     .name(accountRequestDto.getName())
                     .bank((accountRequestDto.getBank()))
                     .accountNumber(accountRequestDto.getAccountNumber())
@@ -39,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
                     .count(0)
                     .build();
             accountRepository.save(account);
-            return new AccountResponseDto(account.getName(), account.getUsername(), account.getAccountNumber(), account.getTotalBalance());
+            return new ResponseMessege("messege",Messege.SUCCESS);
         }
     }
 
@@ -54,7 +56,7 @@ public class AccountServiceImpl implements AccountService {
         } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), existingAccount.getPassword())) {
             map.put("Messege", Messege.FAIL);
             existingAccount.setCount(existingAccount.getCount() + 1);
-            accountDisabled(existingAccount);
+            accountDisabled(accountRequestDto);
         } else {
             map.put("Messege", Messege.SUCCESS);
             existingAccount.setCount(0);
@@ -100,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
         } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), withdraw.getPassword())) {
             map.put("Messege", Messege.WRONG_PASSWORD);
             withdraw.setCount(withdraw.getCount() + 1);
-            accountDisabled(withdraw);
+            accountDisabled(accountRequestDto);
         } else {
             withdraw.setTotalBalance(withdraw.getTotalBalance() - accountRequestDto.getTotalbalance());
             historyRepository.save(History.builder()
@@ -130,7 +132,7 @@ public class AccountServiceImpl implements AccountService {
         } else if (!passwordEncoder.matches(accountRequestDto.getPassword(), ac.getPassword())) {
             map.put("Messege", Messege.FAIL);
             ac.setCount(ac.getCount() + 1);
-            accountDisabled(ac);
+            accountDisabled(accountRequestDto);
         } else if (rc == null) {
             map.put("Messege", Messege.FAIL);
         } else if (!rc.getBank().equals(accountRequestDto.getReceiverbank())) {
@@ -160,8 +162,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Map<String, Messege> accountDisabled(Account account) {
-        Account accountcheck = accountRepository.findByUsername(account.getUsername()).orElse(null);
+    public Map<String, Messege> accountDisabled(AccountRequestDto accountRequestDto) {
+        Account accountcheck = accountRepository.findByUsername(accountRequestDto.getUsername()).orElse(null);
         Map<String, Messege> map = new HashMap<>();
         if (accountcheck.getCount() == 3) {
             accountcheck.setActivate(false);

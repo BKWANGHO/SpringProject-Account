@@ -23,14 +23,11 @@ public class Account extends BaseEntity implements Persistable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "username")
-    private User username;
-
     private String password;
 
     private int totalBalance;
 
+    private String username;
     private String name;
 
     @Column(name = "accountNumber",unique = true)
@@ -41,6 +38,10 @@ public class Account extends BaseEntity implements Persistable<Long> {
     private Boolean activate;
 
     private int count;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "accountNumber")
     private List<History> histories;

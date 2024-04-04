@@ -2,6 +2,7 @@ package com.kwangho.account.account;
 
 
 import com.kwangho.account.Enum.Messege;
+import com.kwangho.account.common.ResponseMessege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
 import com.kwangho.account.account.Account;
@@ -9,7 +10,7 @@ import com.kwangho.account.account.Account;
 import java.util.Map;
 
 public interface AccountService {
-    AccountResponseDto join(AccountRequestDto accountRequestDto);
+    ResponseMessege join(AccountRequestDto accountRequestDto);
 
     Map<String, Messege> login(AccountRequestDto accountRequestDto);
 
@@ -19,7 +20,7 @@ public interface AccountService {
 
     Map<String, Messege> accountTransfer(AccountRequestDto accountRequestDto);
 
-    Map<String,Messege> accountDisabled(Account account);
+    Map<String,Messege> accountDisabled(AccountRequestDto accountRequestDto);
 
     Map<String, Object> accountList(AccountRequestDto accountRequestDto);
 }

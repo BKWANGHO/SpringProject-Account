@@ -6,7 +6,8 @@ import lombok.Getter;
 @Getter
 public class AccountRequestDto {
 
-    private User username;
+    private Long userId;
+    private String username;
     private String name;
     private String password;
     private String accountNumber;

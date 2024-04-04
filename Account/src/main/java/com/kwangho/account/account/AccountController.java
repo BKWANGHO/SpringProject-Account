@@ -1,6 +1,7 @@
 package com.kwangho.account.account;
 
 import com.kwangho.account.Enum.Messege;
+import com.kwangho.account.common.ResponseMessege;
 import com.kwangho.account.dto.request.AccountRequestDto;
 import com.kwangho.account.dto.response.AccountResponseDto;
 import com.kwangho.account.account.AccountService;
@@ -19,7 +20,7 @@ public class AccountController {
 
 
     @PostMapping("/account/join")
-    public AccountResponseDto join(@RequestBody AccountRequestDto accountRequestDto) {
+    public ResponseMessege join(@RequestBody AccountRequestDto accountRequestDto) {
         return accountService.join(accountRequestDto);
     }
 

@@ -21,9 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "username")
-    @Column(name = "username",unique = true)
-    private List<Account> username;
+    private String username;
 
     private String password;
 
@@ -33,5 +31,8 @@ public class User {
 
     private String job;
 
+    @OneToMany(mappedBy = "user")
+    @Column(name = "account")
+    private List<Account> account;
 
 }
