@@ -1,4 +1,4 @@
-package com.kwangho.account.config;
+package com.kwangho.account.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
-package com.kwangho.account.user;
+package com.kwangho.account.user.model;
 
 
-import com.kwangho.account.account.Account;
+import com.kwangho.account.account.model.Account;
 import jakarta.persistence.*;
 import lombok.*;
 

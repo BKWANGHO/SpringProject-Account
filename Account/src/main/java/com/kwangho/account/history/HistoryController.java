@@ -1,7 +1,8 @@
 package com.kwangho.account.history;
 
 
-import com.kwangho.account.account.AccountRequestDto;
+import com.kwangho.account.account.model.AccountDto;
+import com.kwangho.account.history.service.HistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class HistoryController {
 
 
 @PostMapping("/history")
-    public Map<?,?> findAll (@RequestBody AccountRequestDto accountRequestDto){
+    public Map<?,?> findAll (@RequestBody AccountDto accountRequestDto){
         return historyService.findAll(accountRequestDto);
 
 

@@ -1,9 +1,9 @@
-package com.kwangho.account.history;
+package com.kwangho.account.history.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kwangho.account.account.Account;
-import com.kwangho.account.common.BaseEntity;
+import com.kwangho.account.account.model.Account;
+import com.kwangho.account.common.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

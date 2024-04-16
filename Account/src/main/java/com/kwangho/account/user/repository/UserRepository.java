@@ -1,5 +1,6 @@
-package com.kwangho.account.user;
+package com.kwangho.account.user.repository;
 
+import com.kwangho.account.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

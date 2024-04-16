@@ -1,4 +1,4 @@
-package com.kwangho.account.common;
+package com.kwangho.account.common.model;
 
 
 import jakarta.persistence.Column;

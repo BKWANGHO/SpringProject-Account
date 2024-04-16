@@ -1,44 +1,48 @@
 package com.kwangho.account.account;
 
-import com.kwangho.account.Enum.Messege;
-import com.kwangho.account.common.ResponseMessege;
+import com.kwangho.account.account.model.AccountDto;
+import com.kwangho.account.account.service.AccountService;
+import com.kwangho.account.common.component.Messenger;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
-//@RequestMapping("/account")
 @RequiredArgsConstructor
+@RequestMapping("/api/account")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@Slf4j
 public class AccountController {
-    private final AccountService accountService;
+    private final AccountService service;
 
 
 
-    @PostMapping("/account/join")
-    public ResponseMessege join(@RequestBody AccountRequestDto accountRequestDto) {
-        return accountService.join(accountRequestDto);
+    @PostMapping("/save")
+    public ResponseEntity<Messenger> save(@RequestBody AccountDto accountRequestDto) {
+        return ResponseEntity.ok(service.save(accountRequestDto));
     }
 
 
     @PostMapping("/deposit")
-    public Map<String,Messege> deposit(@RequestBody AccountRequestDto accountRequestDto){
-        return accountService.deposit(accountRequestDto);
+    public ResponseEntity<AccountDto> deposit(@RequestBody AccountDto accountRequestDto){
+        return ResponseEntity.ok(service.deposit(accountRequestDto));
     }
 
     @PostMapping("/withdraw")
-    public Map<String,Messege> withdraw(@RequestBody AccountRequestDto accountRequestDto){
-        return accountService.withdraw(accountRequestDto);
+    public ResponseEntity<AccountDto> withdraw(@RequestBody AccountDto accountRequestDto){
+        return ResponseEntity.ok(service.withdraw(accountRequestDto));
     }
 
     @PostMapping("/transfer")
-    public Map<String,Messege> accountTransfer(@RequestBody AccountRequestDto accountRequestDto){
-        return accountService.accountTransfer(accountRequestDto);
+    public ResponseEntity<AccountDto> accountTransfer(@RequestBody AccountDto accountRequestDto){
+        return ResponseEntity.ok(service.accountTransfer(accountRequestDto));
     }
 
-    @PostMapping("/account/list")
-    public Map<String, Object> accountList(@RequestBody AccountRequestDto accountRequestDto){
-        return accountService.accountList(accountRequestDto);
+    @GetMapping("/list")
+    public ResponseEntity<List<AccountDto>> accountList(){
+        return ResponseEntity.ok(service.findAll());
     }
 }

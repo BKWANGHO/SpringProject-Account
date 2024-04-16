@@ -1,7 +1,6 @@
-package com.kwangho.account.account;
+package com.kwangho.account.account.repository;
 
-import com.kwangho.account.account.Account;
-import com.kwangho.account.user.User;
+import com.kwangho.account.account.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

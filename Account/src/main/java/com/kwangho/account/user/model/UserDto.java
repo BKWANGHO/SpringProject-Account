@@ -1,9 +1,9 @@
-package com.kwangho.account.user;
+package com.kwangho.account.user.model;
 
 import lombok.Getter;
 
 @Getter
-public class UserRequestDto {
+public class UserDto {
     private String username;
     private String password;
     private String name;
